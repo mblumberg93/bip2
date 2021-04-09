@@ -1,13 +1,14 @@
 // Import dependencies
 const express = require('express');
-const httpModule = require('http');
+const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const socketIO = require("socket.io");
 
 // Create a new express application named 'app'
 const app = express();
-const http = httpModule.createServer(app);
+const server = http.createServer(app);
 
 // Set our backend port to be either an environment variable or port 5000
 const port = process.env.PORT || 5000;
@@ -41,6 +42,28 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
     });
 };
 
+const io = socketIO(server, {
+    cors: {
+        origin: "*",
+    },
+});
+
+io.on("connection", (socket) => {
+    // Join a conversation
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+  
+    // Listen for new messages
+    socket.on('newChatMessage', (data) => {
+        io.in(roomId).emit('newChatMessage', data);
+    });
+  
+    // Leave the room if the user closes the socket
+    socket.on("disconnect", () => {
+        socket.leave(roomId);
+    });
+});
+
 // Catch any bad requests
 app.get('*', (req, res) => {
     res.status(200).json({
@@ -49,4 +72,4 @@ app.get('*', (req, res) => {
 });
 
 // Configure our server to listen on the port defiend by our port variable
-http.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
+server.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
