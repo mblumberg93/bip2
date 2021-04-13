@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./Home.css";
+import "./Home.scss";
 
 const Home = () => {
     const [roomName, setRoomName] = React.useState("");
@@ -11,16 +11,18 @@ const Home = () => {
     };
 
     return (
-        <div className="home-container">
-            <input
-                type="text"
-                placeholder="Room"
-                value={roomName}
-                onChange={handleRoomNameChange}
-                className="text-input-field" />
-            <Link to={`/${roomName}`} className="enter-room-button">
-                Join room
-            </Link>
+        <div className="page">
+            <div class="home-container">
+                <h1 class="home-header">Let's Play BIP!</h1>
+                <input type="text"
+                       placeholder="Game Code"
+                       value={roomName}
+                       onChange={handleRoomNameChange}
+                       className="game-code-field" />
+                <Link to={`/${roomName}`} className="join-game-button">
+                    Join Game
+                </Link>
+            </div>
         </div>
     );
 };
