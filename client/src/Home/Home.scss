@@ -1,3 +1,8 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .home-header {
     font-size: 2.75rem;
     text-align: center;
@@ -8,7 +13,7 @@
     padding: 1.5rem 0.75rem;
     border-radius: 0.5rem;
     font-size: 1.75rem;
-    margin-right: 2rem;
+    display: block;
 
     &:focus {
         outline: none;
@@ -16,7 +21,7 @@
 }
 
 .join-game-button {
-    margin-top: 1.35rem;
+    margin-top: 0.75rem;
     padding: 1.5rem 0.75rem;
     font-size: 1.75rem;
     background: #31a24c;
@@ -25,4 +30,5 @@
     text-align: center;
     text-decoration: none;
     border-radius: 0.5rem;
+    border: none;
 }

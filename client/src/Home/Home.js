@@ -1,14 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
 import "./Home.scss";
 
 const Home = () => {
-    const [roomName, setRoomName] = React.useState("");
+    const [gameCode, setGameCode] = React.useState("");
+    const history = useHistory();
 
-    const handleRoomNameChange = (event) => {
-        setRoomName(event.target.value);
+    const handleGameCodeChange = (event) => {
+        setGameCode(event.target.value);
     };
+
+    const handleJoinGame = () => {
+        if (gameCode) {
+            history.push(`/${gameCode}`);
+        }
+    }
 
     return (
         <div className="page">
@@ -16,12 +22,13 @@ const Home = () => {
                 <h1 class="home-header">Let's Play BIP!</h1>
                 <input type="text"
                        placeholder="Game Code"
-                       value={roomName}
-                       onChange={handleRoomNameChange}
+                       value={gameCode}
+                       onChange={handleGameCodeChange}
                        className="game-code-field" />
-                <Link to={`/${roomName}`} className="join-game-button">
+                <button className="join-game-button"
+                        onClick={handleJoinGame}>
                     Join Game
-                </Link>
+                </button>
             </div>
         </div>
     );
