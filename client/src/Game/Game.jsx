@@ -1,45 +1,51 @@
 import { useState } from "react"
 import "./Game.scss"
 import useGame from "../useGame"
-import { STANDARD } from "../formations"
+import { STANDARD, OPPONENT_STANDARD } from "../formations"
+import Square from "../Square/Square"
 
 const Game = (props) => {
     const { gameCode } = props.match.params
     const { updates, sendUpdate } = useGame(gameCode)
-    const [newUpdate, setNewUpdate] = useState("")
-    const [ currentCups, setCurrentCups ] = useState(STANDARD.cups)
-    const [ opponentCups, setOpponentCups ] = useState(STANDARD.cups)
+    const [ cups, setCups] = useState(STANDARD.cups)
+    const [ opponentCups, setOpponentCups ] = useState(OPPONENT_STANDARD.cups)
 
-    const squareClass = (row, column, cups) => {
-        if (hasCup(row, column, cups)) {
-            return "square cup"
-        } else {
-            return "square"
-        }
-    }
-
-    const hasCup = (row, column, cups) => {
-        for (let cup of cups){
-            if (cup.row == row && cup.column == column) {
-                return true
+    const getCup = (row, column, someCups) => {
+        for (let cup of someCups){
+            if (cup.row === row && cup.column === column) {
+                return cup
             }
         }
-        return false
+        return null
+    }
+
+    const toggleCup = (row, column, someCups) => {
+        let newCups = Array.from(someCups)
+        for (let cup of newCups){
+            if (cup.row === row && cup.column === column) {
+                cup.active = !cup.active
+            }
+        }
+        setCups([...newCups])
     }
 
     return (
         <div className="page">
             <div className="table">
                 <div className="rack">
-                    <div class="formation">
+                    <div className="formation">
                         {[...Array(7).keys()].map((row) =>
-                            <div className="row" key={"row"+row}>
+                            <div className="row" 
+                                 key={"row" + row}
+                                 id={"row" + row}>
                                 {[...Array(7).keys()].map((column) =>
-                                    <div className="square" key={"square"+row+column} >
-                                        { hasCup(row, column, currentCups) &&
-                                            <div className="cup" key={"cup"+row+column}></div>
-                                        }
-                                    </div>
+                                    <Square key={"square" + row + column}
+                                            cup={getCup(row, column, cups)}
+                                            row={row}
+                                            column={column}
+                                            onToggle={(row, column) => toggleCup(row, column, cups)}
+                                            opponent={false}>
+                                    </Square>   
                                 )}
                             </div>
                         )}
@@ -47,15 +53,18 @@ const Game = (props) => {
                 </div>
                 <div className="spacer"></div>
                 <div className="rack">
-                    <div class="opponent-formation">
+                    <div className="opponent-formation">
                         {[...Array(7).keys()].reverse().map((row) =>
-                            <div className="row" key={"row"+row}>
+                            <div className="row" 
+                                 key={"opponentrow" + row}
+                                 id={"opponentrow" + row}>
                                 {[...Array(7).keys()].map((column) =>
-                                    <div className="square" key={"square"+row+column} >
-                                        { hasCup(row, column, currentCups) &&
-                                            <div className="cup" key={"cup"+row+column}></div>
-                                        }
-                                    </div>
+                                    <Square key={"opponentsquare" + row + column} 
+                                            cup={getCup(row, column, opponentCups)}
+                                            row={row}
+                                            column={column}
+                                            opponent={true}>
+                                    </Square>   
                                 )}
                             </div>
                         )}

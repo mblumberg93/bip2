@@ -1,0 +1,14 @@
+$cupSize: calc((40vh - 2rem) / 3.5);
+$cupOffset: calc(-1 * (40vh - 2rem) / 14);
+
+.cup {
+    margin-top: $cupOffset;
+    margin-left: $cupOffset;
+    background-color: grey;
+    height: $cupSize;
+    width: $cupSize;
+    border-radius: $cupSize;
+}
+.active-cup {
+    background-color: red;
+}

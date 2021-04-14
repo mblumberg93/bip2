@@ -1,42 +1,40 @@
+$tableHeight: 80vh;
+$tableWidth: 40vh;
+$tablePadding: calc((40vh - 2rem) / 10);
+$rackSize: calc(40vh - 2rem);
+$squareSize: calc((40vh - 2rem) / 7);
+
 .table {
-    height: 80vh;
-    width: 40vh;
+    height: $tableHeight;
+    width: $tableWidth;
     background-color: #ffa54f;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: calc((40vh - 2rem) / 10);
+    padding: $tablePadding;
 }
 .rack {
-    width: calc(40vh - 2rem);
-    height: calc(40vh - 2rem);
+    width: $rackSize;
+    height: $rackSize;
 }
 .formation {
     height: 100%;
     width: 100%;
-    margin-top: calc(-1 * ((40vh - 2rem) / 14));
-    margin-left: calc(-1 * ((40vh - 2rem) / 14));
 }
 .opponent-formation {
     height: 100%;
     width: 100%;
-    margin-top: calc(-1 * ((40vh - 2rem) / 14));
-    margin-left: calc(-1 * ((40vh - 2rem) / 14));
 }
 .spacer {
     height: 4rem;
-    width: calc(40vh - 2rem);
+    width: $rackSize;
+    visibility: hidden;
 }
 .row {
     display: flex;
 }
 .square {
-    height: calc((40vh - 2rem) / 7);
-    width: calc((40vh - 2rem) / 7);
-}
-.cup {
-    background-color: red;
-    height: calc((40vh - 2rem) / 3.5);
-    width: calc((40vh - 2rem) / 3.5);
-    border-radius: calc((40vh - 2rem) / 3.5);
+    height: $squareSize;
+    width: $squareSize;
+    background-color: black;
 }

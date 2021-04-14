@@ -1,0 +1,10 @@
+$squareSize: calc((40vh - 2rem) / 7);
+
+.square {
+    height: $squareSize;
+    width: $squareSize;
+    background-color: black;
+}
+.empty-square {
+    visibility: hidden;
+}
