@@ -25,16 +25,25 @@ $squareSize: calc((40vh - 2rem) / 7);
     height: 100%;
     width: 100%;
 }
-.spacer {
+.formation-container {
     height: 4rem;
     width: $rackSize;
-    visibility: hidden;
+}
+.formation-change {
+    position: absolute;
+    top: 50%;
+    margin-left: calc(-1 * 30vh);
+
+    @media (max-width: 480px) {
+        margin-left: calc(-1 * 15vh);
+    }
 }
 .row {
     display: flex;
 }
-.square {
-    height: $squareSize;
-    width: $squareSize;
-    background-color: black;
+.hidden {
+    display: none;
+}
+.invisible {
+    visibility: hidden;
 }

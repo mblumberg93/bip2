@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "./Game.scss"
 import useGame from "../useGame"
-import { STANDARD, OPPONENT_STANDARD } from "../formations"
+import { STANDARD, OPPONENT_STANDARD, FORMATIONS } from "../formations"
 import Square from "../Square/Square"
 
 const Game = (props) => {
@@ -9,6 +9,7 @@ const Game = (props) => {
     const { updates, sendUpdate } = useGame(gameCode)
     const [ cups, setCups] = useState(STANDARD.cups)
     const [ opponentCups, setOpponentCups ] = useState(OPPONENT_STANDARD.cups)
+    const [ reracking, setReracking] = useState(false)
 
     const getCup = (row, column, someCups) => {
         for (let cup of someCups){
@@ -27,6 +28,10 @@ const Game = (props) => {
             }
         }
         setCups([...newCups])
+    }
+
+    const toggleReracking = () => {
+        setReracking(!reracking)
     }
 
     return (
@@ -51,7 +56,19 @@ const Game = (props) => {
                         )}
                     </div>
                 </div>
-                <div className="spacer"></div>
+                <button className={"formation-change" + (reracking ? " hidden" : "")} 
+                        onClick={toggleReracking}>Rerack</button>
+                <div className={"formation-container" + (reracking ? "" : " invisible")}>
+                    <select className={"formation-select" + (reracking ? "" : " hidden")}
+                            onChange={toggleReracking}>
+                        { [...FORMATIONS].map((form) => 
+                            <option key={"formation" + form.value}
+                                    value={form.value}>
+                                {form.name}
+                            </option>
+                        )}
+                    </select>
+                </div>
                 <div className="rack">
                     <div className="opponent-formation">
                         {[...Array(7).keys()].reverse().map((row) =>
