@@ -15,8 +15,11 @@ code {
 .page {
   width: 100vw;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 480px) {
+    min-height: -webkit-fill-available;
+  }
 }
