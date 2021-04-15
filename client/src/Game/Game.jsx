@@ -1,15 +1,14 @@
 import { useState } from "react"
 import "./Game.scss"
 import useGame from "../useGame"
-import { STANDARD, OPPONENT_STANDARD, FORMATIONS } from "../formations"
+import { STANDARD, FORMATIONS } from "../formations"
 import Square from "../Square/Square"
 
 const Game = (props) => {
     const { gameCode } = props.match.params
-    const { updates, sendUpdate } = useGame(gameCode)
-    const [ cups, setCups] = useState(STANDARD.cups)
-    const [ opponentCups, setOpponentCups ] = useState(OPPONENT_STANDARD.cups)
-    const [ reracking, setReracking] = useState(false)
+    const { opponentCups, sendUpdate } = useGame(gameCode)
+    const [cups, setCups] = useState(STANDARD.cups)
+    const [reracking, setReracking] = useState(false)
 
     const getCup = (row, column, someCups) => {
         for (let cup of someCups){
@@ -27,11 +26,22 @@ const Game = (props) => {
                 cup.active = !cup.active
             }
         }
-        setCups([...newCups])
+        updateCups([...newCups])
     }
 
     const toggleReracking = () => {
         setReracking(!reracking)
+    }
+
+    const changeRack = (event) => {
+        let newCups = FORMATIONS.filter(f => f.value === parseInt(event.target.value))[0].cups
+        newCups.map(c => c.active = true)
+        updateCups(newCups)
+    }
+
+    const updateCups = (newCups) => {
+        setCups(newCups)
+        sendUpdate(newCups)
     }
 
     return (
@@ -60,7 +70,7 @@ const Game = (props) => {
                         onClick={toggleReracking}>Rerack</button>
                 <div className={"formation-container" + (reracking ? "" : " invisible")}>
                     <select className={"formation-select" + (reracking ? "" : " hidden")}
-                            onChange={toggleReracking}>
+                            onChange={changeRack}>
                         { [...FORMATIONS].map((form) => 
                             <option key={"formation" + form.value}
                                     value={form.value}>
@@ -68,6 +78,7 @@ const Game = (props) => {
                             </option>
                         )}
                     </select>
+                    <button onClick={toggleReracking}>Done</button>
                 </div>
                 <div className="rack">
                     <div className="opponent-formation">

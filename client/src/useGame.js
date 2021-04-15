@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
+import { OPPONENT_STANDARD } from "./formations"
 
 const NEW_GAME_UPDATE_EVENT = "newGameUpdate";
 const SOCKET_SERVER_URL = "/";
 
 const useGame = (gameCode) => {
-    const [updates, setUpdates] = useState([]);
+    const [opponentCups, setOpponentCups] = useState(OPPONENT_STANDARD.cups)
     const socketRef = useRef();
 
     useEffect(() => {
@@ -14,11 +15,9 @@ const useGame = (gameCode) => {
         });
 
         socketRef.current.on(NEW_GAME_UPDATE_EVENT, (update) => {
-            const incomingUpdate = {
-                ...update,
-                ownedByCurrentUser: update.senderId === socketRef.current.id,
-            };
-            setUpdates((updates) => [...updates, incomingUpdate]);
+            if (update.senderId !== socketRef.current.id) {
+                setOpponentCups((opponentCups) => [...update.body])
+            }
         });
 
         return () => {
@@ -33,7 +32,7 @@ const useGame = (gameCode) => {
         });
     };
 
-    return { updates, sendUpdate };
+    return { opponentCups, sendUpdate };
 };
 
 export default useGame;
