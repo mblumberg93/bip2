@@ -1,0 +1,34 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-header {
+    font-size: 2.75rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.game-code-field {
+    padding: 1.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1.75rem;
+    display: block;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.join-game-button {
+    margin-top: 0.75rem;
+    padding: 1.5rem 0.75rem;
+    font-size: 1.75rem;
+    background: #31a24c;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: none;
+}

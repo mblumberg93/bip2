@@ -1,0 +1,49 @@
+$tableHeight: 80vh;
+$tableWidth: 40vh;
+$tablePadding: calc((40vh - 2rem) / 10);
+$rackSize: calc(40vh - 2rem);
+$squareSize: calc((40vh - 2rem) / 7);
+
+.table {
+    height: $tableHeight;
+    width: $tableWidth;
+    background-color: #ffa54f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $tablePadding;
+}
+.rack {
+    width: $rackSize;
+    height: $rackSize;
+}
+.formation {
+    height: 100%;
+    width: 100%;
+}
+.opponent-formation {
+    height: 100%;
+    width: 100%;
+}
+.formation-container {
+    height: 4rem;
+    width: $rackSize;
+}
+.formation-change {
+    position: absolute;
+    top: 50%;
+    margin-left: calc(-1 * 30vh);
+
+    @media (max-width: 480px) {
+        margin-left: calc(-1 * 15vh);
+    }
+}
+.row {
+    display: flex;
+}
+.hidden {
+    display: none;
+}
+.invisible {
+    visibility: hidden;
+}

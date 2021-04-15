@@ -28,10 +28,11 @@ app.use(bodyParser.urlencoded({
 // Configure the CORs middleware
 app.use(cors());
 
+// API Currently Unused
 // Require Route
-const api = require('./routes/routes');
+// const api = require('./routes/routes');
 // Configure app to use route
-app.use('/api/v1/', api);
+// app.use('/api/v1/', api);
 
 // This middleware informs the express application to serve our compiled React files
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
@@ -50,17 +51,17 @@ const io = socketIO(server, {
 
 io.on("connection", (socket) => {
     // Join a conversation
-    const { roomId } = socket.handshake.query;
-    socket.join(roomId);
+    const { gameCode } = socket.handshake.query;
+    socket.join(gameCode);
   
     // Listen for new messages
-    socket.on('newChatMessage', (data) => {
-        io.in(roomId).emit('newChatMessage', data);
+    socket.on('newGameUpdate', (data) => {
+        io.in(gameCode).emit('newGameUpdate', data);
     });
   
     // Leave the room if the user closes the socket
     socket.on("disconnect", () => {
-        socket.leave(roomId);
+        socket.leave(gameCode);
     });
 });
 
